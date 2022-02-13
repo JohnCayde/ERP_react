@@ -1,7 +1,9 @@
 import * as engineer from "../actions/EngineerAction";
 import { v4 as uuidv4 } from "uuid";
+import * as EngineerConstant from "../constants/Engineer";
+import * as EngineerTypes from "../types/Engineer";
 
-const initialState = {
+const initialState: EngineerTypes.EngineerState = {
   products: [
     {
       id: "6d32582d-2db2-481b-89b4-7170d50de7b9",
@@ -138,15 +140,15 @@ const initialState = {
 
 export default function (
   state = initialState,
-  action: { type: string; payload: object }
-) {
+  action: EngineerTypes.EngineerAction
+): EngineerTypes.EngineerState {
   switch (action.type) {
-    case engineer.ADD_MATERIAL:
+    case EngineerConstant.ADD_MATERIAL:
       return {
         ...state,
         materials: [...state.materials, action.payload],
       };
-    case engineer.DEL_MATERIAL:
+    case EngineerConstant.DEL_MATERIAL:
       const materials = state.materials.filter(
         (material) => material.id != action.payload
       );
@@ -155,12 +157,12 @@ export default function (
         ...state,
         materials: materials,
       };
-    case engineer.ADD_PROCESS:
+    case EngineerConstant.ADD_PROCESS:
       return {
         ...state,
         processes: [...state.processes, action.payload],
       };
-    case engineer.DEL_PROCESS:
+    case EngineerConstant.DEL_PROCESS:
       const processes = state.processes.filter(
         (process) => process.id != action.payload
       );
@@ -168,7 +170,7 @@ export default function (
         ...state,
         processes,
       };
-    case engineer.ADD_PROCEDURE:
+    case EngineerConstant.ADD_PROCEDURE:
       return {
         ...state,
         procedures: [...state.procedures, action.payload],
@@ -177,12 +179,12 @@ export default function (
           { id: uuidv4(), name: action.payload.name },
         ],
       };
-    case engineer.DEL_PROCEDURE:
+    case EngineerConstant.DEL_PROCEDURE:
       const deleted = state.procedures.find(
         (procedure) => procedure.id == action.payload
       );
       const products = state.products.filter(
-        (product) => product.name != deleted.name
+        (product) => product.name != deleted!.name
       );
       const procedures = state.procedures.filter(
         (procedure) => procedure.id != action.payload

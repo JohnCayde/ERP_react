@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Switch, Route, Link, Redirect, useRouteMatch } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { RootState } from "../store";
 
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -19,7 +20,7 @@ import Typography from "@mui/material/Typography";
 import MainRequest from "./MainRequest";
 import MainRequestPen from "./MainRequestPen";
 import MainRequestOvr from "./MainRequestOvr";
-import MainInventory from "./MainInventory.tsx";
+import MainInventory from "./MainInventory";
 import MainInvRequest from "./MainInvRequest";
 import MainInvReceive from "./MainInvReceive";
 
@@ -28,9 +29,9 @@ const drawerWidth = 240;
 function Maintenance() {
   //store
   const match = useRouteMatch();
-  const purchasing = useSelector((state) => state.purchasing);
-  const production = useSelector((state) => state.production);
-  const assets = useSelector((state) => state.maintenance);
+  const purchasing = useSelector((state: RootState) => state.purchasing);
+  const production = useSelector((state: RootState) => state.production);
+  const assets = useSelector((state: RootState) => state.maintenance);
 
   //data process
   const toolRequests = purchasing.requests.filter(
@@ -42,11 +43,11 @@ function Maintenance() {
   const [spare, setSpare] = useState(true);
 
   //function
-  const handleMain = (e) => {
+  const handleMain = () => {
     setMain(!main);
   };
 
-  const handleSpare = (e) => {
+  const handleSpare = () => {
     setSpare(!spare);
   };
 

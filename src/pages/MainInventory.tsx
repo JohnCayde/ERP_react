@@ -1,6 +1,7 @@
 import { useState } from "react";
 import * as maintenance from "../actions/MaintenanceAction";
 import store from "../store";
+import * as MaintenanceTypes from "../types/Maintenance";
 
 import { DataGrid } from "@mui/x-data-grid";
 import Typography from "@mui/material/Typography";
@@ -25,7 +26,11 @@ const style = {
   p: 4,
 };
 
-function MainInventory({ inventory }) {
+function MainInventory({
+  inventory,
+}: {
+  inventory: Array<MaintenanceTypes.Item>;
+}) {
   const columns = ["ID", "Name", "Stock"].map((field) => {
     return {
       field: field.toLowerCase(),
@@ -55,7 +60,7 @@ function MainInventory({ inventory }) {
   const openQuantity = () => setQuantity(true);
   const closeQuantity = () => setQuantity(false);
 
-  const handleNewItemName = () => {
+  const handleNewItemName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewItemName(e.target.value);
   };
 
@@ -65,15 +70,19 @@ function MainInventory({ inventory }) {
     setItem(false);
   };
 
-  const handleInv = () => {
+  const handleInv = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | (Event & { target: { value: string; name: string } })
+  ) => {
     setInv(e.target.value);
   };
 
-  const handleQty = (e) => {
-    setQty(e.target.value);
+  const handleQty = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQty(parseInt(e.target.value));
   };
 
-  const adjItem = (e) => {
+  const adjItem = (e: React.MouseEvent<HTMLButtonElement>) => {
     store.dispatch(maintenance.AdjustItem(inv, qty));
     setQuantity(false);
     setInv("");
