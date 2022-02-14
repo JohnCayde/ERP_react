@@ -2,8 +2,10 @@
 
 Manufacturing execution systems (MES) are computerized systems used in manufacturing to track and document the transformation of raw materials to finished goods.
 
+This project demostrate my experience at manufacturing factory and understanding about MES work.
+
 The dataflow of app
-[Data Flow](https://github.com/JohnCayde/MES-react/blob/main/src/assets/image/concept.png).
+![Data Flow](https://github.com/JohnCayde/MES-react/blob/main/src/assets/image/concept.png).
 
 This app covered feature for section:
 
@@ -16,14 +18,12 @@ This app covered feature for section:
 - Maintenance
 - Sales
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 ## Tech Stack
 
 - React
 - React Redux
 - React Router
-- React Mui
+- React MUI
 
 ## How To Start
 
