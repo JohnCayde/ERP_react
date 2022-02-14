@@ -28,11 +28,11 @@ function MainRequest({
   sections: Array<ProductionTypes.SectionModel>;
 }) {
   const NewRequests = requests
-    .filter((request) => request.status == "pending")
+    .filter((request) => request.status === "pending")
     .map((request) => {
       const idComp = request.id.split("-");
       const sectionProfile = sections.find(
-        (section) => section.id == request.section
+        (section) => section.id === request.section
       );
 
       return {
@@ -49,14 +49,14 @@ function MainRequest({
 
   const handleOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
     const requestId = e.currentTarget.value;
-    const req = NewRequests.find((request) => request.id == requestId);
+    const req = NewRequests.find((request) => request.id === requestId);
     setActiveRequest(req);
     setOpen(true);
   };
   const handleClose = () => setOpen(false);
 
   const revRequest = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const confirmation = confirm("Are you sure?");
+    const confirmation = window.confirm("Are you sure?");
     if (!confirmation) {
       return;
     }
@@ -101,7 +101,7 @@ function MainRequest({
                 <TableCell align="right">{request.section}</TableCell>
                 <TableCell align="right">{`${index} day ago`}</TableCell>
                 <TableCell align="right">
-                  {request.status != "received" && (
+                  {request.status !== "received" && (
                     <IconButton
                       edge="end"
                       aria-label="receive"
@@ -127,7 +127,7 @@ function MainRequest({
       </TableContainer>
       <ModalMainRequest
         mode="review"
-        request={activeRequest!}
+        request={activeRequest}
         open={open}
         handleClose={handleClose}
         requests={[]}

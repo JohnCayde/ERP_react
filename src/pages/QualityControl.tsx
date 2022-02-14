@@ -30,7 +30,7 @@ function QuantityControl() {
   const issueNotes = qc.notes.map((nt) => {
     const idComp = nt.id.split("-");
     const sectionProfile = production.sections.find(
-      (section) => section.id == nt.section
+      (section) => section.id === nt.section
     );
     return {
       ...nt,

@@ -1,4 +1,4 @@
-import * as qc from "../actions/QcAction";
+// import * as qc from "../actions/QcAction";
 import * as QcConstants from "../constants/Qc";
 import * as QcTypes from "../types/Qc";
 
@@ -15,7 +15,7 @@ const initialState: QcTypes.QcState = {
   ],
 };
 
-export default function (
+export default function QcReducer(
   state = initialState,
   action: QcTypes.QcAction
 ): QcTypes.QcState {
@@ -27,7 +27,7 @@ export default function (
       };
     case QcConstants.DEL_NOTES:
       const RemainNotes = state.notes.filter(
-        (note) => note.id != action.payload
+        (note) => note.id !== action.payload
       );
       return {
         ...state,
@@ -35,7 +35,7 @@ export default function (
       };
     case QcConstants.COM_NOTES:
       const nwNotes = state.notes.map((note) => {
-        if (note.id == action.payload) {
+        if (note.id === action.payload) {
           note.status = "resolved";
         }
         return note;

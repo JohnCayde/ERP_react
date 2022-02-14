@@ -1,4 +1,4 @@
-import * as React from "react";
+// import * as React from "react";
 import * as ProductionTypes from "../types/Production";
 
 import Table from "@mui/material/Table";
@@ -22,13 +22,13 @@ function ProdConMonitor({
     const sectionComponent = components.filter((component) => {
       //component that exist in the section
       const processIndex = component.process.findIndex(
-        (comp) => comp.process == section.process
+        (comp) => comp.process === section.process
       );
-      if (processIndex == -1) {
+      if (processIndex === -1) {
         return false;
       }
 
-      if (processIndex == 0) {
+      if (processIndex === 0) {
         if (!component.process[processIndex + 1].complete) {
           return true;
         }
@@ -37,17 +37,18 @@ function ProdConMonitor({
           return true;
         }
       }
+      return false;
     });
 
     const completedComponent = sectionComponent.filter(
       //component that is complete process, no matter previous process or current process
-      (component) => component.status == "completed"
+      (component) => component.status === "completed"
     );
 
     const pendingComponent = completedComponent.filter((component) => {
       //component that is complete previous process
       const processIndex = component.process.findIndex(
-        (prs) => prs.process == section.process
+        (prs) => prs.process === section.process
       );
 
       return !component.process[processIndex].complete;
@@ -55,7 +56,7 @@ function ProdConMonitor({
 
     const processingComponent = sectionComponent.filter(
       //component that is currently processing
-      (component) => component.status == "pending"
+      (component) => component.status === "pending"
     );
 
     return {

@@ -34,14 +34,14 @@ const initialState: MaintenanceType.MaintenanceState = {
   ],
 };
 
-export default function (
+export default function MainReducer(
   state = initialState,
   action: MaintenanceType.MaintenanceAction
 ): MaintenanceType.MaintenanceState {
   switch (action.type) {
     case MaintenanceConstant.REV_MRequest:
       const rMaintenanceRequests = state.requests.map((request) => {
-        if (request.id == action.payload) {
+        if (request.id === action.payload) {
           request.status = "reviewed";
         }
         return request;
@@ -53,7 +53,7 @@ export default function (
       };
     case MaintenanceConstant.COM_MRequest:
       const cMaintenanceRequests = state.requests.map((request) => {
-        if (request.id == action.payload.requestId) {
+        if (request.id === action.payload.requestId) {
           request.status = "completed";
           request.remark = action.payload.remark;
         }
@@ -71,7 +71,7 @@ export default function (
       };
     case MaintenanceConstant.ADJ_INV:
       const newItem = state.inventory.map((item) => {
-        if (item.id == action.payload.itemId) {
+        if (item.id === action.payload.itemId) {
           item.stock = action.payload.quantity;
         }
         return item;

@@ -1,4 +1,4 @@
-import * as store from "../actions/StoreAction";
+// import * as store from "../actions/StoreAction";
 import { v4 as uuidv4 } from "uuid";
 import * as StoreConstants from "../constants/Store";
 import * as StoreTypes from "../types/Store";
@@ -39,7 +39,7 @@ const initialState: StoreTypes.StoreState = {
   ],
 };
 
-export default function (
+export default function StoreReducer(
   state = initialState,
   action: StoreTypes.StoreAction
 ): StoreTypes.StoreState {
@@ -51,7 +51,7 @@ export default function (
       };
     case StoreConstants.ADJ_MATERIAL:
       const newMaterials = state.matstore.map((material) => {
-        if (material.id == action.payload.materialId) {
+        if (material.id === action.payload.materialId) {
           material.stock = action.payload.quantity;
         }
         return material;
@@ -63,7 +63,7 @@ export default function (
       };
     case StoreConstants.ADJ_FINISH_GOOD:
       const newFinishGoods = state.fgstore.map((fg) => {
-        if (fg.id == action.payload.fgId) {
+        if (fg.id === action.payload.fgId) {
           fg.stock = action.payload.quantity;
         }
         return fg;
@@ -81,7 +81,7 @@ export default function (
     case StoreConstants.REV_MAT_REQUEST:
       const revReq: Array<StoreTypes.MatRequestModel> = state.requests.map(
         (request) => {
-          if (request.id == action.payload) {
+          if (request.id === action.payload) {
             return {
               ...request,
               status: "reviewed",
@@ -98,7 +98,7 @@ export default function (
     case StoreConstants.COM_MAT_REQUEST:
       const comReq: Array<StoreTypes.MatRequestModel> = state.requests.map(
         (request) => {
-          if (request.id == action.payload) {
+          if (request.id === action.payload) {
             return {
               ...request,
               status: "completed",
@@ -120,7 +120,7 @@ export default function (
     case StoreConstants.COM_TRANSACTION:
       const comTrans: Array<StoreTypes.TransactionModel> =
         state.transaction.map((item) => {
-          if (item.id == action.payload) {
+          if (item.id === action.payload) {
             return {
               ...item,
               status: "completed",
@@ -130,12 +130,12 @@ export default function (
         });
 
       const transaction = state.transaction.find(
-        (item) => item.id == action.payload
+        (item) => item.id === action.payload
       );
       const index = state.fgstore.findIndex(
-        (item) => item.productId == transaction!.productId
+        (item) => item.productId === transaction!.productId
       );
-      if (index == -1) {
+      if (index === -1) {
         const newRecord = {
           id: uuidv4(),
           productId: transaction!.productId,
@@ -150,7 +150,7 @@ export default function (
         };
       } else {
         const newFgList = state.fgstore.map((item, idx) => {
-          if (idx == index) {
+          if (idx === index) {
             return {
               ...item,
               stock: item.stock + 1,

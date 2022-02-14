@@ -27,7 +27,7 @@ function StoreMatPurRequest({
 }) {
   //data processing
   const requests = allRequests
-    .filter((request) => request.status == "pending")
+    .filter((request) => request.status === "pending")
     .map((request) => {
       const idComp = request.id.split("-");
       return {
@@ -38,12 +38,14 @@ function StoreMatPurRequest({
 
   //state
   const [open, setOpen] = useState(false);
-  const [activeRequest, setActiveRequest] = useState({});
+  const [activeRequest, setActiveRequest] = useState<
+    (PurchaseTypes.RequestModel & { no: string }) | undefined
+  >(undefined);
   const [openRequest, setOpenRequest] = useState(false);
   //function
   const handleOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
     const requestId = e.currentTarget.value;
-    const req = requests.find((request) => request.id == requestId);
+    const req = requests.find((request) => request.id === requestId);
     setActiveRequest(req!);
     setOpen(true);
   };

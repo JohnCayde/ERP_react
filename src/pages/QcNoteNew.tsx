@@ -45,8 +45,8 @@ function QcNoteNew({
     setAction(e.target.value);
   };
 
-  const handleDetail = (e) => {
-    setDetails(e.target.value);
+  const handleDetail: React.FormEventHandler<HTMLTextAreaElement> = (e) => {
+    setDetails((e.target as HTMLInputElement).value);
   };
 
   const addIssueNote = () => {

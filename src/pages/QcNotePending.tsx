@@ -25,7 +25,7 @@ function QcNotePending({
 }: {
   notes: Array<QcTypes.NoteModel & { no: string }>;
 }) {
-  const pendingNotes = notes.filter((note) => note.status == "pending");
+  const pendingNotes = notes.filter((note) => note.status === "pending");
 
   const [open, setOpen] = useState(false);
   const [activeNote, setActiveNote] = useState<
@@ -34,14 +34,14 @@ function QcNotePending({
 
   const handleOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
     const noteId = e.currentTarget.value;
-    const issueNote = notes.find((note) => note.id == noteId);
+    const issueNote = notes.find((note) => note.id === noteId);
     setActiveNote(issueNote);
     setOpen(true);
   };
   const handleClose = () => setOpen(false);
 
   const delNote = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const confirmation = confirm("Are you sure?");
+    const confirmation = window.confirm("Are you sure?");
     if (!confirmation) {
       return;
     }
@@ -51,7 +51,7 @@ function QcNotePending({
   };
 
   const comNote = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const confirmation = confirm("Are you sure?");
+    const confirmation = window.confirm("Are you sure?");
     if (!confirmation) {
       return;
     }
@@ -102,7 +102,7 @@ function QcNotePending({
                 <TableCell align="right">{note.action}</TableCell>
                 <TableCell align="right">{note.status}</TableCell>
                 <TableCell align="right">
-                  {note.status != "received" && (
+                  {note.status !== "received" && (
                     <IconButton
                       edge="end"
                       aria-label="receive"
@@ -134,11 +134,7 @@ function QcNotePending({
           </TableBody>
         </Table>
       </TableContainer>
-      <ModalIssueNote
-        note={activeNote!}
-        open={open}
-        handleClose={handleClose}
-      />
+      <ModalIssueNote note={activeNote} open={open} handleClose={handleClose} />
     </Box>
   );
 }

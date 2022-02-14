@@ -38,7 +38,7 @@ function MainInvReceive({
 
   const handleOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
     const requestId = e.currentTarget.value;
-    const req = requests.find((request) => request.id == requestId);
+    const req = requests.find((request) => request.id === requestId);
     setActiveRequest(req);
     setOpen(true);
   };
@@ -86,7 +86,7 @@ function MainInvReceive({
                 <TableCell align="right">{request.status}</TableCell>
                 <TableCell align="right">{`${index} day ago`}</TableCell>
                 <TableCell align="right">
-                  {request.status == "reviewed" && (
+                  {request.status === "reviewed" && (
                     <Button
                       variant="contained"
                       value={request.id}
@@ -110,7 +110,7 @@ function MainInvReceive({
         </Table>
       </TableContainer>
       <ModalRequestDetails
-        request={activeRequest!}
+        request={activeRequest}
         open={open}
         handleClose={handleClose}
       />

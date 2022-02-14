@@ -51,7 +51,7 @@ function SalesCustomer({
 
   const handleOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
     const customerId = e.currentTarget.value;
-    const cust = customers.find((customer) => customer.id == customerId);
+    const cust = customers.find((customer) => customer.id === customerId);
     setActiveCustomer(cust);
     setOpen(true);
   };

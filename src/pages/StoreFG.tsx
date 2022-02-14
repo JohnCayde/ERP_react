@@ -40,7 +40,7 @@ function StoreFG2({
   finsihGoodStore: Array<StoreTypes.FinishGoodModel>;
 }) {
   const pendingTransaction = transaction.filter(
-    (item) => item.status == "pending"
+    (item) => item.status === "pending"
   );
   const history = useHistory();
 

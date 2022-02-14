@@ -1,4 +1,4 @@
-import * as engineer from "../actions/EngineerAction";
+// import * as engineer from "../actions/EngineerAction";
 import { v4 as uuidv4 } from "uuid";
 import * as EngineerConstant from "../constants/Engineer";
 import * as EngineerTypes from "../types/Engineer";
@@ -138,7 +138,7 @@ const initialState: EngineerTypes.EngineerState = {
   ],
 };
 
-export default function (
+export default function EngineerReducer(
   state = initialState,
   action: EngineerTypes.EngineerAction
 ): EngineerTypes.EngineerState {
@@ -150,7 +150,7 @@ export default function (
       };
     case EngineerConstant.DEL_MATERIAL:
       const materials = state.materials.filter(
-        (material) => material.id != action.payload
+        (material) => material.id !== action.payload
       );
 
       return {
@@ -164,7 +164,7 @@ export default function (
       };
     case EngineerConstant.DEL_PROCESS:
       const processes = state.processes.filter(
-        (process) => process.id != action.payload
+        (process) => process.id !== action.payload
       );
       return {
         ...state,
@@ -181,13 +181,13 @@ export default function (
       };
     case EngineerConstant.DEL_PROCEDURE:
       const deleted = state.procedures.find(
-        (procedure) => procedure.id == action.payload
+        (procedure) => procedure.id === action.payload
       );
       const products = state.products.filter(
-        (product) => product.name != deleted!.name
+        (product) => product.name !== deleted!.name
       );
       const procedures = state.procedures.filter(
-        (procedure) => procedure.id != action.payload
+        (procedure) => procedure.id !== action.payload
       );
       return {
         ...state,

@@ -1,5 +1,3 @@
-import * as PurchaseTypes from "../types/Purchase";
-
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
@@ -24,7 +22,7 @@ function ModalRequestDetails({
   open,
   handleClose,
 }: {
-  request: { items: Array<{ name: string; quantity: number }> };
+  request: { items: Array<{ name: string; quantity: number }> } | undefined;
   open: boolean;
   handleClose: () => void;
 }) {
@@ -40,7 +38,8 @@ function ModalRequestDetails({
           Request Details
         </Typography>
         <List>
-          {request.items &&
+          {request &&
+            request.items &&
             request.items.map((itm, idx) => {
               return (
                 <ListItem sx={{ border: "solid 2px" }} key={idx}>

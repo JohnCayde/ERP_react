@@ -86,10 +86,12 @@ function Purchasing() {
       (order) => {
         const idComp = order.id.split("-");
         const vendorProfile = purchasing.vendors.find(
-          (vendor) => vendor.id == order.vendor
+          (vendor) => vendor.id === order.vendor
         );
         const items = order.items.map((item) => {
-          const itemProfile = purchasing.items.find((itm) => itm.id == item.id);
+          const itemProfile = purchasing.items.find(
+            (itm) => itm.id === item.id
+          );
           return {
             itemName: itemProfile!.name,
             quantity: item.quantity,
@@ -110,10 +112,10 @@ function Purchasing() {
     setRows(purchaseOrder);
   };
 
-  if (rows.length == 0) {
-    if (location.pathname == "/purchase/request/overview") {
+  if (rows.length === 0) {
+    if (location.pathname === "/purchase/request/overview") {
       handleRequestOverview();
-    } else if (location.pathname == "/purchase/purchase/overview") {
+    } else if (location.pathname === "/purchase/purchase/overview") {
       handlePurchaseOverview();
     }
   }

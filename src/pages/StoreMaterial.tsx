@@ -38,15 +38,15 @@ function MaterialStore({
   const production = useSelector((state: RootState) => state.production);
   //data process
   const toolRequests = purchasing.requests.filter(
-    (request) => request.from == "Material Store"
+    (request) => request.from === "Material Store"
   );
 
   const materialRequest = requests.map((request) => {
     const sectionProfile = production.sections.find(
-      (section) => section.id == request.section
+      (section) => section.id === request.section
     );
     const itemProfile = purchasing.items.find(
-      (item) => item.id == request.item
+      (item) => item.id === request.item
     );
 
     return {

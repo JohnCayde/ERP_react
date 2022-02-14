@@ -4,7 +4,6 @@ import * as Sale from "../actions/SaleAction";
 import * as production from "../actions/ProductionAction";
 import store from "../store";
 import { RootState } from "../store";
-import * as SaleTypes from "../types/Sale";
 import * as ProductionTypes from "../types/Production";
 
 import ListSubheader from "@mui/material/ListSubheader";
@@ -26,15 +25,15 @@ function ProdConSales() {
 
   const products = engineer.products;
   const newSalesOrder = sales.salesOrder
-    .filter((order) => order.status == "pending")
+    .filter((order) => order.status === "pending")
     .map((order) => {
       const code = order.id.split("-");
       const customerProfile = sales.customers.find(
-        (customer) => customer.id == order.customerId
+        (customer) => customer.id === order.customerId
       );
       const items = order.items.map((item) => {
         const itemProfile = products.find(
-          (product) => product.id == item.itemId
+          (product) => product.id === item.itemId
         );
         return {
           ...item,
@@ -51,15 +50,15 @@ function ProdConSales() {
     });
 
   const reviewedSalesOrder = sales.salesOrder
-    .filter((order) => order.status == "reviewed")
+    .filter((order) => order.status === "reviewed")
     .map((order) => {
       const code = order.id.split("-");
       const customerProfile = sales.customers.find(
-        (customer) => customer.id == order.customerId
+        (customer) => customer.id === order.customerId
       );
       const items = order.items.map((item) => {
         const itemProfile = products.find(
-          (product) => product.id == item.itemId
+          (product) => product.id === item.itemId
         );
         return {
           ...item,
@@ -94,11 +93,16 @@ function ProdConSales() {
 
   const handleOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
     const orderId = e.currentTarget.value;
-    const index = newSalesOrder.findIndex((order) => order.id == orderId);
+    const index = newSalesOrder.findIndex((order) => order.id === orderId);
     const odr =
-      index == -1
-        ? reviewedSalesOrder.find((order) => order.id == orderId)
+      index === -1
+        ? reviewedSalesOrder.find((order) => order.id === orderId)
         : newSalesOrder[index];
+    if (!odr) {
+      alert("No Order Found");
+      return;
+    }
+    console.log("Hi1");
     setActiveOrder(odr);
     setOpen(true);
   };
@@ -112,12 +116,12 @@ function ProdConSales() {
     const orderId = e.currentTarget.value;
     store.dispatch(Sale.RevOrder(orderId));
 
-    const order = newSalesOrder.find((odr) => odr.id == orderId);
+    const order = newSalesOrder.find((odr) => odr.id === orderId);
 
     const components: Array<ProductionTypes.NewComponent> = order!.items.map(
       (item) => {
         const procedure = engineer.procedures.find(
-          (procdure) => procdure.name == item.name
+          (procdure) => procdure.name === item.name
         );
         const process = procedure!.processes.map((prs) => {
           return {
@@ -239,7 +243,7 @@ function ProdConSales() {
         </Grid>
       </Grid>
       <ModalSaleOrder
-        order={activeOrder!}
+        order={activeOrder}
         open={open}
         handleClose={handleClose}
       />

@@ -35,28 +35,28 @@ function ProdConDashBoard({
 
   for (let i = 0; i < pending.length; i++) {
     const idx = components.findIndex(
-      (component) => component.id == pending[i].productId
+      (component) => component.id === pending[i].productId
     );
     components[idx].pending += 1;
   }
 
   for (let i = 0; i < processing.length; i++) {
     const idx = components.findIndex(
-      (component) => component.id == processing[i].productId
+      (component) => component.id === processing[i].productId
     );
     components[idx].processing += 1;
   }
 
   for (let i = 0; i < prodStock.length; i++) {
     const idx = components.findIndex(
-      (component) => component.id == prodStock[i].productId
+      (component) => component.id === prodStock[i].productId
     );
     components[idx].prodStock += 1;
   }
 
   for (let i = 0; i < stock.length; i++) {
     const idx = components.findIndex(
-      (component) => component.id == stock[i].productId
+      (component) => component.id === stock[i].productId
     );
     components[idx].stock += 1;
   }

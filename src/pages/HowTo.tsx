@@ -18,6 +18,7 @@ import Divider from "@mui/material/Divider";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import LinkOffIcon from "@mui/icons-material/LinkOff";
 import MoodIcon from "@mui/icons-material/Mood";
+import concept from "../assets/image/concept.png";
 // import { TextSpan } from "typescript";
 
 function CustomCard({ children }: { children: Array<JSX.Element> }) {
@@ -94,7 +95,7 @@ function HowTo() {
           Diagram below show how is the relationship between each department.
           The web app are build based on the relationship shown.
         </Typography>
-        <img src="../../img/4862c/concept.png" alt="Concept" width="1100" />
+        <img src={concept} alt="Concept" width="1100" />
       </Box>
       <Divider />
       <Box my={4}>

@@ -1,4 +1,4 @@
-import * as sale from "../actions/SaleAction";
+// import * as sale from "../actions/SaleAction";
 import * as SaleConstants from "../constants/Sale";
 import * as SaleTypes from "../types/Sale";
 
@@ -66,7 +66,7 @@ const initialState: SaleTypes.SaleState = {
   ],
 };
 
-export default function (
+export default function SaleReducer(
   state = initialState,
   action: SaleTypes.SaleAction
 ): SaleTypes.SaleState {
@@ -78,7 +78,7 @@ export default function (
       };
     case SaleConstants.DEL_CUSTOMER:
       const customers = state.customers.filter(
-        (customer) => customer.id != action.payload
+        (customer) => customer.id !== action.payload
       );
       return {
         ...state,
@@ -91,7 +91,7 @@ export default function (
       };
     case SaleConstants.DEL_ORDER:
       const salesOrder = state.salesOrder.filter(
-        (order) => order.id != action.payload
+        (order) => order.id !== action.payload
       );
       return {
         ...state,
@@ -99,7 +99,7 @@ export default function (
       };
     case SaleConstants.REV_ORDER:
       const revSalesOrder = state.salesOrder.map((order) => {
-        if (order.id == action.payload) {
+        if (order.id === action.payload) {
           order.status = "reviewed";
         }
         return order;

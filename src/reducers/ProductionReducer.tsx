@@ -1,4 +1,4 @@
-import * as production from "../actions/ProductionAction";
+// import * as production from "../actions/ProductionAction";
 import * as ProductionConstants from "../constants/Production";
 import { ProductionState, ProductionAction } from "../types/Production";
 
@@ -233,7 +233,7 @@ const initialState: ProductionState = {
   ],
 };
 
-export default function (
+export default function ProductionReducer(
   state = initialState,
   action: ProductionAction
 ): ProductionState {
@@ -245,7 +245,7 @@ export default function (
       };
     case ProductionConstants.DEL_SECTION:
       const sections = state.sections.filter(
-        (section) => section.id != action.payload
+        (section) => section.id !== action.payload
       );
       return {
         ...state,
@@ -258,7 +258,7 @@ export default function (
       };
     case ProductionConstants.DEL_MACHINE:
       const machines = state.machines.filter(
-        (machine) => machine.id != action.payload
+        (machine) => machine.id !== action.payload
       );
       return {
         ...state,
@@ -267,7 +267,7 @@ export default function (
     case ProductionConstants.START_PROCESS:
     case ProductionConstants.COMPLETE_PROCESS:
       const otherComponent = state.components.map((component) => {
-        if (component.id == action.payload.id) {
+        if (component.id === action.payload.id) {
           return action.payload;
         }
         return component;
@@ -284,7 +284,7 @@ export default function (
       };
     case ProductionConstants.HANDLE_PLANNING:
       const sectionPlanning = state.sections.map((section) => {
-        if (section.id == action.payload.sectionId) {
+        if (section.id === action.payload.sectionId) {
           section.planning = action.payload.quantity;
         }
         return section;

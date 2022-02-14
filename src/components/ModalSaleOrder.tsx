@@ -1,5 +1,3 @@
-import * as SaleTypes from "../types/Sale";
-
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import List from "@mui/material/List";
@@ -24,7 +22,7 @@ function ModalSaleOrder({
   open,
   handleClose,
 }: {
-  order: { items: Array<{ name: string; quantity: number }> };
+  order: { items: Array<{ name: string; quantity: number }> } | undefined;
   open: boolean;
   handleClose: () => void;
 }) {
@@ -40,7 +38,7 @@ function ModalSaleOrder({
           Order Details
         </Typography>
         <List>
-          {order.items &&
+          {order &&
             order.items.map((item, idx) => {
               return (
                 <ListItem key={idx} sx={{ border: "solid 2px" }}>

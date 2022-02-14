@@ -27,7 +27,7 @@ function MainInvRequest({
 }) {
   //data processing
   const requests = allRequests
-    .filter((request) => request.status == "pending")
+    .filter((request) => request.status === "pending")
     .map((request) => {
       const idComp = request.id.split("-");
       return {
@@ -45,7 +45,7 @@ function MainInvRequest({
   //function
   const handleOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
     const requestId = e.currentTarget.value;
-    const req = requests.find((request) => request.id == requestId);
+    const req = requests.find((request) => request.id === requestId);
     setActiveRequest(req);
     setOpen(true);
   };
@@ -109,7 +109,7 @@ function MainInvRequest({
         </Table>
       </TableContainer>
       <ModalRequestDetails
-        request={activeRequest!}
+        request={activeRequest}
         open={open}
         handleClose={handleClose}
       />

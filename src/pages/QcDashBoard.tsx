@@ -27,7 +27,7 @@ function QcDashBoard({
 
   const handleOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
     const noteId = e.currentTarget.value;
-    const issueNote = notes.find((note) => note.id == noteId);
+    const issueNote = notes.find((note) => note.id === noteId);
     setActiveNote(issueNote);
     setOpen(true);
   };
@@ -89,11 +89,7 @@ function QcDashBoard({
           </TableBody>
         </Table>
       </TableContainer>
-      <ModalIssueNote
-        note={activeNote!}
-        open={open}
-        handleClose={handleClose}
-      />
+      <ModalIssueNote note={activeNote} open={open} handleClose={handleClose} />
     </Box>
   );
 }

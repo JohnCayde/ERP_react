@@ -22,7 +22,7 @@ function ModalIssueNote({
   open,
   handleClose,
 }: {
-  note: QcTypes.NoteModel & { no: string };
+  note: (QcTypes.NoteModel & { no: string }) | undefined;
   open: boolean;
   handleClose: () => void;
 }) {
@@ -48,7 +48,7 @@ function ModalIssueNote({
           sx={{ my: 2 }}
           id="outlined-disabled"
           label="Section"
-          defaultValue={note.section}
+          defaultValue={note && note.section}
         />
         <TextField
           fullWidth
@@ -56,7 +56,7 @@ function ModalIssueNote({
           sx={{ my: 2 }}
           id="outlined-disabled"
           label="Component"
-          defaultValue={note.component}
+          defaultValue={note && note.component}
         />
         <TextField
           fullWidth
@@ -64,7 +64,7 @@ function ModalIssueNote({
           sx={{ my: 2 }}
           id="outlined-disabled"
           label="Component"
-          defaultValue={note.action}
+          defaultValue={note && note.action}
         />
         <TextField
           fullWidth
@@ -72,7 +72,7 @@ function ModalIssueNote({
           sx={{ my: 2 }}
           id="outlined-disabled"
           label="Status"
-          defaultValue={note.status}
+          defaultValue={note && note.status}
         />
         <TextField
           fullWidth
@@ -80,7 +80,7 @@ function ModalIssueNote({
           sx={{ my: 2 }}
           id="outlined-disabled"
           label="Status"
-          defaultValue={note.details}
+          defaultValue={note && note.details}
         />
       </Box>
     </Modal>

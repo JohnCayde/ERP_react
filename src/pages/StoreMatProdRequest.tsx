@@ -26,12 +26,14 @@ function StoreMatProdRequest({
 }) {
   //state
   const [open, setOpen] = useState(false);
-  const [activeRequest, setActiveRequest] = useState({});
+  const [activeRequest, setActiveRequest] = useState<
+    { items: Array<{ name: string; quantity: number }> } | undefined
+  >(undefined);
 
   //function
   const handleOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
     const requestId = e.currentTarget.value;
-    const req = requests.find((request) => request.id == requestId);
+    const req = requests.find((request) => request.id === requestId);
     setActiveRequest({ items: [{ name: req!.item, quantity: req!.quantity }] });
     setOpen(true);
   };
@@ -82,7 +84,7 @@ function StoreMatProdRequest({
                 </TableCell>
                 <TableCell align="right">{request.status}</TableCell>
                 <TableCell align="right">
-                  {request.status == "pending" && (
+                  {request.status === "pending" && (
                     <IconButton
                       edge="end"
                       aria-label="review"

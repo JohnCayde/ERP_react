@@ -1,4 +1,4 @@
-import * as Purchaser from "../actions/PurchaseAction";
+// import * as Purchaser from "../actions/PurchaseAction";
 import * as PurchaseConstants from "../constants/Purchase";
 import * as PurchaseTypes from "../types/Purchase";
 
@@ -149,7 +149,7 @@ const initialState: PurchaseTypes.PurchaseState = {
   deliveryOrder: [],
 };
 
-export default function (
+export default function PurchaseReducer(
   state = initialState,
   action: PurchaseTypes.PurchaseAction
 ): PurchaseTypes.PurchaseState {
@@ -161,7 +161,7 @@ export default function (
       };
     case PurchaseConstants.DEL_PURCHASE_ORDER:
       const nwPurchaseOrders = state.purchaseOrders.filter(
-        (order) => order.id != action.payload
+        (order) => order.id !== action.payload
       );
       return {
         ...state,
@@ -169,7 +169,7 @@ export default function (
       };
     case PurchaseConstants.REV_PURCHASE_ORDER:
       const PurchaseOrders = state.purchaseOrders.map((order) => {
-        if (order.id == action.payload) {
+        if (order.id === action.payload) {
           order.status = "received";
         }
         return order;
@@ -186,7 +186,7 @@ export default function (
       };
     case PurchaseConstants.REV_REQUEST:
       const revRequest = state.requests.map((request) => {
-        if (request.id == action.payload) {
+        if (request.id === action.payload) {
           request.status = "reviewed";
         }
         return request;
@@ -198,7 +198,7 @@ export default function (
       };
     case PurchaseConstants.COM_REQUEST:
       const comRequest = state.requests.map((request) => {
-        if (request.id == action.payload) {
+        if (request.id === action.payload) {
           request.status = "received";
         }
         return request;

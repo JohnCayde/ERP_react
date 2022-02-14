@@ -27,28 +27,28 @@ function PdCon() {
   const engineer = useSelector((state: RootState) => state.engineer);
 
   const productionComponent = production.components.filter(
-    (component) => component.status == "pending"
+    (component) => component.status === "pending"
   );
   const completedComponent = production.components.filter(
-    (component) => component.status == "completed"
+    (component) => component.status === "completed"
   );
 
   const processing = completedComponent.filter((component) => {
-    const processed = component.process.some((prs) => prs.complete == true);
+    const processed = component.process.some((prs) => prs.complete === true);
     const completelyNew = component.process.every(
-      (prs) => prs.complete == false
+      (prs) => prs.complete === false
     );
     return processed && !completelyNew;
   });
 
   const pending = completedComponent.filter((component) => {
-    return component.process.every((prs) => prs.complete == false);
+    return component.process.every((prs) => prs.complete === false);
   });
   const prodStock = store.transaction.filter(
-    (component) => component.status == "pending"
+    (component) => component.status === "pending"
   );
   const stock = store.transaction.filter(
-    (component) => component.status == "received"
+    (component) => component.status === "received"
   );
 
   return (

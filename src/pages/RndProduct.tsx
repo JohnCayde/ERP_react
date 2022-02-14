@@ -57,12 +57,14 @@ function RndProduct({ Assets }: { Assets: EngineerTypes.EngineerState }) {
   const [open, setOpen] = useState(false);
   const handleOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
     const procedureId = e.currentTarget.value;
-    let rawProcedure = Assets.procedures.find((pcdr) => pcdr.id == procedureId);
+    let rawProcedure = Assets.procedures.find(
+      (pcdr) => pcdr.id === procedureId
+    );
     const procedureMaterial = Assets.materials.find(
-      (mtrl) => mtrl.id == rawProcedure!.material
+      (mtrl) => mtrl.id === rawProcedure!.material
     );
     const procedureProcess = rawProcedure!.processes.map((process) => {
-      const prcs = Assets.processes.find((prs) => prs.id == process.id);
+      const prcs = Assets.processes.find((prs) => prs.id === process.id);
       return prcs!.name;
     });
 
@@ -100,33 +102,33 @@ function RndProduct({ Assets }: { Assets: EngineerTypes.EngineerState }) {
   };
 
   const addProcess = () => {
-    if (process == "") {
+    if (process === "") {
       alert("Please select your process");
       return;
     }
-    const prcs = Assets.processes.find((ps) => ps.id == process);
+    const prcs = Assets.processes.find((ps) => ps.id === process);
     setProcesses([...processes, { ...prcs!, code: uuidv4() }]);
   };
 
   const delProcess = (e: React.MouseEvent<HTMLButtonElement>) => {
     const newPrcs = processes.filter(
-      (prcs) => prcs.code != e.currentTarget.value
+      (prcs) => prcs.code !== e.currentTarget.value
     );
     setProcesses(newPrcs);
   };
 
   const addProcedure = () => {
-    if (name == "") {
+    if (name === "") {
       alert("Please fill in product name");
       return;
     }
 
-    if (material == "") {
+    if (material === "") {
       alert("Please fill in material name");
       return;
     }
 
-    if (processes.length == 0) {
+    if (processes.length === 0) {
       alert("Please fill in product process");
       return;
     }

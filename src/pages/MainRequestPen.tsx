@@ -43,11 +43,11 @@ function MainRequestPen({
   sections: Array<ProductionTypes.SectionModel>;
 }) {
   const PendingRequests = requests
-    .filter((request) => request.status == "reviewed")
+    .filter((request) => request.status === "reviewed")
     .map((request) => {
       const idComp = request.id.split("-");
       const sectionProfile = sections.find(
-        (section) => section.id == request.section
+        (section) => section.id === request.section
       );
 
       return {
@@ -66,7 +66,7 @@ function MainRequestPen({
 
   const handleOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
     const requestId = e.currentTarget.value;
-    const req = PendingRequests.find((request) => request.id == requestId);
+    const req = PendingRequests.find((request) => request.id === requestId);
 
     setActiveRequest(req);
     setOpen(true);
@@ -75,7 +75,7 @@ function MainRequestPen({
 
   const openComplete = (e: React.MouseEvent<HTMLButtonElement>) => {
     const requestId = e.currentTarget.value;
-    const req = PendingRequests.find((request) => request.id == requestId);
+    const req = PendingRequests.find((request) => request.id === requestId);
     setActiveRequest(req);
     setComplete(true);
   };
@@ -86,7 +86,7 @@ function MainRequestPen({
   };
 
   const comRequest = () => {
-    const confirmation = confirm("Are you sure?");
+    const confirmation = window.confirm("Are you sure?");
     if (!confirmation) {
       return;
     }
@@ -138,7 +138,7 @@ function MainRequestPen({
                 <TableCell align="right">{request.section}</TableCell>
                 <TableCell align="right">{`${index} day ago`}</TableCell>
                 <TableCell align="right">
-                  {request.status != "received" && (
+                  {request.status !== "received" && (
                     <IconButton
                       edge="end"
                       aria-label="receive"
@@ -164,7 +164,7 @@ function MainRequestPen({
       </TableContainer>
       <ModalMainRequest
         mode="complete"
-        request={activeRequest!}
+        request={activeRequest}
         open={open}
         handleClose={handleClose}
         requests={[]}

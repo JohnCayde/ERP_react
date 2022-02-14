@@ -32,11 +32,13 @@ function StoreMatPurReceive({
   });
 
   const [open, setOpen] = useState(false);
-  const [activeRequest, setActiveRequest] = useState({});
+  const [activeRequest, setActiveRequest] = useState<
+    (PurchaseTypes.RequestModel & { no: string }) | undefined
+  >(undefined);
 
   const handleOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
     const requestId = e.currentTarget.value;
-    const req = requests.find((request) => request.id == requestId);
+    const req = requests.find((request) => request.id === requestId);
     setActiveRequest(req!);
     setOpen(true);
   };
@@ -83,7 +85,7 @@ function StoreMatPurReceive({
                 <TableCell align="right">{request.status}</TableCell>
                 <TableCell align="right">{`${index} day ago`}</TableCell>
                 <TableCell align="right">
-                  {request.status == "reviewed" && (
+                  {request.status === "reviewed" && (
                     <Button
                       variant="contained"
                       value={request.id}

@@ -33,7 +33,7 @@ function PurchaseRequestPen({
   //function
   const handleOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
     const requestId = e.currentTarget.value;
-    const req = requests.find((request) => request.id == requestId);
+    const req = requests.find((request) => request.id === requestId);
     setActiveRequest(req);
     setOpen(true);
   };
@@ -110,7 +110,7 @@ function PurchaseRequestPen({
         </Table>
       </TableContainer>
       <ModalRequestDetails
-        request={activeRequest!}
+        request={activeRequest}
         open={open}
         handleClose={handleClose}
       />

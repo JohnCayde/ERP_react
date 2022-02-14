@@ -48,13 +48,13 @@ function ProdWork({
   const sectionComponent = components.filter((component) => {
     //component that exist in the section
     const processIndex = component.process.findIndex(
-      (comp) => comp.process == section.processId
+      (comp) => comp.process === section.processId
     );
-    if (processIndex == -1) {
+    if (processIndex === -1) {
       return false;
     }
 
-    if (processIndex == 0) {
+    if (processIndex === 0) {
       if (!component.process[processIndex + 1].complete) {
         return true;
       }
@@ -63,17 +63,18 @@ function ProdWork({
         return true;
       }
     }
+    return false;
   });
 
   const completedComponent = sectionComponent.filter(
     //component that is complete process, no matter previous process or current process
-    (component) => component.status == "completed"
+    (component) => component.status === "completed"
   );
 
   const pendingComponent = completedComponent.filter((component) => {
     //component that is complete previous process
     const processIndex = component.process.findIndex(
-      (prs) => prs.process == section.processId
+      (prs) => prs.process === section.processId
     );
 
     return !component.process[processIndex].complete;
@@ -82,7 +83,7 @@ function ProdWork({
   const stockComponent = completedComponent.filter((component) => {
     //componen that is complete current process
     const processIndex = component.process.findIndex(
-      (prs) => prs.process == section.processId
+      (prs) => prs.process === section.processId
     );
 
     return component.process[processIndex].complete;
@@ -90,17 +91,17 @@ function ProdWork({
 
   const processingComponent = sectionComponent.filter(
     //component that is currently processing
-    (component) => component.status == "pending"
+    (component) => component.status === "pending"
   );
 
   const sectionMachine = machines //machine that is locate in the current section
-    .filter((machine) => machine.sectionId == section.id)
+    .filter((machine) => machine.sectionId === section.id)
     .map((machine) => {
       const componentInMachine = processingComponent.find((component) => {
         const processIndex = component.process.findIndex(
-          (prs) => prs.process == section.processId
+          (prs) => prs.process === section.processId
         );
-        return component.process[processIndex].machine == machine.id;
+        return component.process[processIndex].machine === machine.id;
       });
 
       const componentId = componentInMachine ? componentInMachine.id : "";
@@ -111,17 +112,21 @@ function ProdWork({
     });
 
   const maintenanceRequests = maintenance.filter(
-    (record) => record.section == section.id
+    (record) => record.section === section.id
   );
   const matStoreRequests = matstore.filter(
-    (record) => record.section == section.id
+    (record) => record.section === section.id
   );
-  const materials = items.filter((item) => item.type == "material");
+  const materials = items.filter((item) => item.type === "material");
   //state
   const [open, setOpen] = useState(false);
   const [openRequest, setOpenRequest] = useState(false);
   const [service, setService] = useState<
-    { section: string; sectionId: string; issue: "test" } | undefined
+    | (Omit<MaintenanceTypes.MRequest, "id"> & {
+        sectionId: string;
+        no: string;
+      })
+    | undefined
   >(undefined);
   const [openMaterial, setOpenMaterial] = useState(false);
   const [material, setMaterial] = useState<
@@ -137,7 +142,7 @@ function ProdWork({
       document.getElementById(`input_${index}`) as HTMLInputElement
     ).value;
 
-    if (componentNo == "") {
+    if (componentNo === "") {
       alert(
         "Fill in the component no first. If you didn't have, refer to the pending stock list"
       );
@@ -145,7 +150,7 @@ function ProdWork({
     }
 
     const componentProfile = pendingComponent.find(
-      (component) => component.id == componentNo
+      (component) => component.id === componentNo
     );
     if (!componentProfile) {
       alert("Component No invalid");
@@ -176,7 +181,7 @@ function ProdWork({
     const componentNo = (
       document.getElementById(`input_${index}`) as HTMLInputElement
     ).value;
-    if (componentNo == "") {
+    if (componentNo === "") {
       alert(
         "Fill in the component no first. If you didn't have, refer to the pending stock list"
       );
@@ -184,7 +189,7 @@ function ProdWork({
     }
 
     const completeComponent = processingComponent.find(
-      (component) => component.id == componentNo
+      (component) => component.id === componentNo
     );
     if (!completeComponent) {
       alert("Component No invalid");
@@ -204,7 +209,9 @@ function ProdWork({
     store.dispatch(prod.CompleteProcess(profile));
 
     //if all process complete need send to production store
-    const done = completeComponent.process.every((prs) => prs.complete == true);
+    const done = completeComponent.process.every(
+      (prs) => prs.complete === true
+    );
     if (done) {
       store.dispatch(fgStore.AddTransaction(completeComponent));
     }
@@ -245,6 +252,9 @@ function ProdWork({
       section: section.name,
       sectionId: section.id,
       issue: "test",
+      remark: "",
+      no: "",
+      status: "pending",
     });
     setOpenRequest(true);
   };
@@ -356,7 +366,7 @@ function ProdWork({
         <Box py={5}>
           <Box>
             {sectionMachine.map((machine, index) => {
-              if (machine.componentId == "") {
+              if (machine.componentId === "") {
                 return (
                   <Box
                     key={index}
@@ -445,14 +455,14 @@ function ProdWork({
       />
       <ModalMainRequest
         mode="new"
-        request={service!}
+        request={service}
         open={openRequest}
         handleClose={closeRequest}
         requests={maintenanceRequests}
       />
       <ModalMatRequest
         mode="new"
-        request={material!}
+        request={material}
         open={openMaterial}
         handleClose={closeMaterial}
         requests={matStoreRequests}

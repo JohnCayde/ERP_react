@@ -34,7 +34,7 @@ export default function Main() {
           <HomeIcon />
         </Fab>
         <Container>
-          <Router basename="/projects/c81e728d9d4c2f636f067f89cc14862c">
+          <Router>
             <Switch>
               <Route path="/howto" component={HowTo} />
               <Route path="/store" component={Store} />

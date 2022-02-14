@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { styled } from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
@@ -22,7 +22,7 @@ export default function MenuCol({
     alignItems: "center",
     fontSize: 30,
     borderRadius: 50,
-    backgroundColor: title == "Back" ? "#EEC989" : "#33B1F9",
+    backgroundColor: title === "Back" ? "#EEC989" : "#33B1F9",
   }));
 
   return (

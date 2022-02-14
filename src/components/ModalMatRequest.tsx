@@ -28,13 +28,15 @@ function ModalMatRequest({
   materials,
 }: {
   mode: "new";
-  request: {
-    no?: string;
-    section: string;
-    sectionId: string;
-    item: string;
-    quantity: number;
-  };
+  request:
+    | {
+        no?: string;
+        section: string;
+        sectionId: string;
+        item: string;
+        quantity: number;
+      }
+    | undefined;
   open: boolean;
   handleClose: () => void;
   requests: Array<StoreTypes.MatRequestModel & { issue?: string }>;
@@ -48,7 +50,7 @@ function ModalMatRequest({
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: mode == "new" ? 800 : 400,
+    width: mode === "new" ? 800 : 400,
     bgcolor: "background.paper",
     border: "2px solid #000",
     boxShadow: 24,
@@ -68,23 +70,28 @@ function ModalMatRequest({
   };
 
   const AddRequest = () => {
-    const confirmation = confirm("Are you sure?");
+    const confirmation = window.confirm("Are you sure?");
     if (!confirmation) {
       handleClose();
       return;
     }
 
-    if (material == "") {
+    if (material === "") {
       alert("Please select the material");
       return;
     }
 
-    if (quantity == 0) {
+    if (quantity === 0) {
       alert("Please fill in the quantity");
       return;
     }
 
-    const req = {
+    if (!request) {
+      alert("No Request Found");
+      return;
+    }
+
+    const req: StoreTypes.MatRequest = {
       ...request,
       item: material,
       quantity: quantity,
@@ -95,7 +102,7 @@ function ModalMatRequest({
   };
 
   const completeRequest = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const confirmation = confirm("Are you sure?");
+    const confirmation = window.confirm("Are you sure?");
     if (!confirmation) {
       handleClose();
       return;
@@ -116,7 +123,7 @@ function ModalMatRequest({
                   <ListItem
                     key={index}
                     secondaryAction={
-                      req.status != "reviewed" ? (
+                      req.status !== "reviewed" ? (
                         <Typography variant="button" gutterBottom>
                           {req.status}
                         </Typography>
@@ -142,20 +149,20 @@ function ModalMatRequest({
               })}
             </List>
           </Grid>
-          <Grid item xs={mode == "new" ? 6 : 12}>
+          <Grid item xs={mode === "new" ? 6 : 12}>
             <Typography variant="h6" component="h2" gutterBottom>
-              {mode == "new"
+              {mode === "new"
                 ? "New Material Request"
                 : "Material Request Details"}
             </Typography>
-            {mode != "new" && (
+            {mode !== "new" && (
               <TextField
                 fullWidth
                 disabled
                 sx={{ my: 2 }}
                 id="no-disabled"
                 label="No"
-                defaultValue={request.no}
+                defaultValue={request && request.no}
               />
             )}
             <TextField
@@ -164,9 +171,9 @@ function ModalMatRequest({
               sx={{ my: 2 }}
               id="section-disabled"
               label="Section"
-              defaultValue={request.section}
+              defaultValue={request && request.section}
             />
-            {mode == "new" && (
+            {mode === "new" && (
               <FormControl sx={{ my: 2 }} fullWidth>
                 <InputLabel id="demo-simple-select-label">Material</InputLabel>
                 <Select
@@ -182,7 +189,7 @@ function ModalMatRequest({
                 </Select>
               </FormControl>
             )}
-            {mode == "new" ? (
+            {mode === "new" ? (
               <TextField
                 fullWidth
                 sx={{ my: 2 }}
@@ -198,10 +205,10 @@ function ModalMatRequest({
                 sx={{ my: 2 }}
                 type="number"
                 label="Quantity"
-                defaultValue={request.quantity}
+                defaultValue={request && request.quantity}
               />
             )}
-            {mode == "new" && (
+            {mode === "new" && (
               <Box sx={{ my: 2 }}>
                 <Button variant="contained" onClick={AddRequest}>
                   Submit

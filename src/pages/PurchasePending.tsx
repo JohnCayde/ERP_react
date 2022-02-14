@@ -29,14 +29,14 @@ type OrderTemplate = {
 
 function PurchasePending({ assets }: { assets: PurchaseTypes.PurchaseState }) {
   const PurchaseOrders: Array<OrderTemplate> = assets.purchaseOrders
-    .filter((order) => order.status == "pending")
+    .filter((order) => order.status === "pending")
     .map((order) => {
       const idComp = order.id.split("-");
       const vendorProfile = assets.vendors.find(
-        (vendor) => vendor.id == order.vendor
+        (vendor) => vendor.id === order.vendor
       );
       const items = order.items.map((item) => {
-        const itemProfile = assets.items.find((itm) => itm.id == item.id);
+        const itemProfile = assets.items.find((itm) => itm.id === item.id);
         return {
           name: itemProfile!.name,
           quantity: item.quantity,
@@ -59,14 +59,14 @@ function PurchasePending({ assets }: { assets: PurchaseTypes.PurchaseState }) {
 
   const handleOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
     const orderId = e.currentTarget.value;
-    const purchaseOrder = PurchaseOrders.find((order) => order.id == orderId);
+    const purchaseOrder = PurchaseOrders.find((order) => order.id === orderId);
     setActiveOrder(purchaseOrder);
     setOpen(true);
   };
   const handleClose = () => setOpen(false);
 
   const delOrder = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const confirmation = confirm("Are you sure?");
+    const confirmation = window.confirm("Are you sure?");
     if (!confirmation) {
       return;
     }
@@ -76,7 +76,7 @@ function PurchasePending({ assets }: { assets: PurchaseTypes.PurchaseState }) {
   };
 
   const revOrder = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const confirmation = confirm("Are you sure?");
+    const confirmation = window.confirm("Are you sure?");
     if (!confirmation) {
       return;
     }
@@ -124,7 +124,7 @@ function PurchasePending({ assets }: { assets: PurchaseTypes.PurchaseState }) {
                 <TableCell align="right">{`${index} day ago`}</TableCell>
                 <TableCell align="right">{order.status}</TableCell>
                 <TableCell align="right">
-                  {order.status != "received" && (
+                  {order.status !== "received" && (
                     <IconButton
                       edge="end"
                       aria-label="receive"
@@ -157,7 +157,7 @@ function PurchasePending({ assets }: { assets: PurchaseTypes.PurchaseState }) {
         </Table>
       </TableContainer>
       <ModalRequestDetails
-        request={activeOrder!}
+        request={activeOrder}
         open={open}
         handleClose={handleClose}
       />

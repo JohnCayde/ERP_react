@@ -49,7 +49,7 @@ export function StartProcess(
   profile: ProductionTypes.ProcessProfile
 ): ProductionTypes.StartProcess {
   const process = profile.component.process.map((prs) => {
-    if (prs.process == profile.processId) {
+    if (prs.process === profile.processId) {
       return {
         ...prs,
         machine: profile.machine.id,
@@ -74,7 +74,7 @@ export function CompleteProcess(
   profile: ProductionTypes.ProcessProfile
 ): ProductionTypes.CompleteProcess {
   const process = profile.component.process.map((prs) => {
-    if (prs.process == profile.processId) {
+    if (prs.process === profile.processId) {
       prs.complete = true;
       prs.machine = profile.machine.id;
     }

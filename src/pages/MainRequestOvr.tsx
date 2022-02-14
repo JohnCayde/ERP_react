@@ -27,7 +27,7 @@ function MainRequestOvr({
   const AllRequests = requests.map((request) => {
     const idComp = request.id.split("-");
     const sectionProfile = sections.find(
-      (section) => section.id == request.section
+      (section) => section.id === request.section
     );
 
     return {
@@ -44,7 +44,7 @@ function MainRequestOvr({
 
   const handleOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
     const requestId = e.currentTarget.value;
-    const req = AllRequests.find((request) => request.id == requestId);
+    const req = AllRequests.find((request) => request.id === requestId);
     setActiveRequest(req);
     setOpen(true);
   };
@@ -105,7 +105,7 @@ function MainRequestOvr({
       </TableContainer>
       <ModalMainRequest
         mode="review"
-        request={activeRequest!}
+        request={activeRequest}
         open={open}
         handleClose={handleClose}
         requests={[]}

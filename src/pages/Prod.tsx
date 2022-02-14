@@ -17,7 +17,7 @@ function Production() {
 
   const sections = production.sections.map((section) => {
     const processProfile = engineer.processes.find(
-      (process) => process.id == section.process
+      (process) => process.id === section.process
     );
     return {
       ...section,
@@ -28,7 +28,7 @@ function Production() {
 
   const machines = production.machines.map((machine) => {
     const sectionProfile = sections.find(
-      (section) => section.id == machine.section
+      (section) => section.id === machine.section
     );
     return {
       ...machine,

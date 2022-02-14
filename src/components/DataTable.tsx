@@ -52,7 +52,7 @@ function DataTable({
 
   const handleOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
     const orderId = e.currentTarget.value;
-    const purchaseOrder = rows.find((order) => order.id == orderId);
+    const purchaseOrder = rows.find((order) => order.id === orderId);
     setActiveRow(purchaseOrder);
     setOpen(true);
   };
@@ -73,7 +73,7 @@ function DataTable({
           <TableHead>
             <TableRow>
               {columns.map((column, index) => {
-                if (index == 0) {
+                if (index === 0) {
                   return <TableCell key={index}>{column}</TableCell>;
                 } else {
                   return (

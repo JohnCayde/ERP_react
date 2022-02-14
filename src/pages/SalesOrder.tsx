@@ -5,6 +5,7 @@ import store from "../store";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import * as SaleTypes from "../types/Sale";
+import { SelectChangeEvent } from "@mui/material";
 
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
@@ -29,28 +30,16 @@ const Demo = styled("div")(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
 }));
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
-
 function SalesOrder({ Assets }: { Assets: SaleTypes.SaleState }) {
   const history = useHistory();
   const products = useSelector((state: RootState) => state.engineer.products);
   const orders = Assets.salesOrder.map((order) => {
     const idComps = order.id.split("-");
     const customer = Assets.customers.find(
-      (cust) => cust.id == order.customerId
+      (cust) => cust.id === order.customerId
     );
     const salesItems = order.items.map((item) => {
-      const product = products.find((pdct) => pdct.id == item.itemId);
+      const product = products.find((pdct) => pdct.id === item.itemId);
       return { name: product!.name, quantity: item.quantity };
     });
 
@@ -76,7 +65,12 @@ function SalesOrder({ Assets }: { Assets: SaleTypes.SaleState }) {
 
   const handleOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
     const orderId = e.currentTarget.value;
-    const odr = orders.find((order) => order.id == orderId);
+    const odr = orders.find((order) => order.id === orderId);
+    if (!odr) {
+      alert("No Order Found");
+      return;
+    }
+    console.log("Hi2");
     setActiveOrder(odr);
     setOpen(true);
   };
@@ -94,9 +88,10 @@ function SalesOrder({ Assets }: { Assets: SaleTypes.SaleState }) {
     setCust(e.target.value);
   };
 
-  const handleSaleItem = (e) => {
+  const handleSaleItem = (e: SelectChangeEvent<string>) => {
     setSaleItemId(e.target.value);
-    setSaleItemName(e.target.text);
+    setSaleItemName(e.target.value);
+    // setSaleItemName(e.target.text);
   };
 
   const handleQuantity = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -118,7 +113,7 @@ function SalesOrder({ Assets }: { Assets: SaleTypes.SaleState }) {
 
   const delSaleItems = (e: React.MouseEvent<HTMLButtonElement>) => {
     const itemId = e.currentTarget.value;
-    const remainItems = saleItems.filter((item) => item.itemId != itemId);
+    const remainItems = saleItems.filter((item) => item.itemId !== itemId);
     setSaleItems(remainItems);
   };
 
@@ -289,7 +284,7 @@ function SalesOrder({ Assets }: { Assets: SaleTypes.SaleState }) {
         </Grid>
       </Grid>
       <ModalSaleOrder
-        order={activeOrder!}
+        order={activeOrder}
         open={open}
         handleClose={handleClose}
       />

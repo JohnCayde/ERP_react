@@ -59,14 +59,14 @@ function PurchaseNew({
   };
 
   const addItem = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (quantity == 0) {
+    if (quantity === 0) {
       alert("The quantity can nit be 0");
       return;
     }
 
-    const product = items.find((itm) => itm.id == item);
-    const dupIndex = bucket.findIndex((itm) => itm.id == item);
-    if (dupIndex == -1) {
+    const product = items.find((itm) => itm.id === item);
+    const dupIndex = bucket.findIndex((itm) => itm.id === item);
+    if (dupIndex === -1) {
       const cartItem: PurchaseTypes.Item & { quantity: number } = {
         ...product!,
         quantity: quantity,
@@ -74,7 +74,7 @@ function PurchaseNew({
       setBucket([...bucket, cartItem]);
     } else {
       const nwBucket = bucket.map((itm, idx) => {
-        if (idx == dupIndex) {
+        if (idx === dupIndex) {
           itm.quantity = quantity;
         }
         return itm;
@@ -88,7 +88,7 @@ function PurchaseNew({
 
   const delItem = (e: React.MouseEvent<HTMLButtonElement>) => {
     const itemId = e.currentTarget.value;
-    const nwBucket = bucket.filter((itm) => itm.id != itemId);
+    const nwBucket = bucket.filter((itm) => itm.id !== itemId);
     setBucket(nwBucket);
   };
 

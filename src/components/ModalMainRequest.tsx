@@ -16,10 +16,12 @@ import ListItemText from "@mui/material/ListItemText";
 
 type NewMode = {
   mode: "new";
-  request: MaintenanceTypes.MRequest & {
-    no: string;
-    sectionId: string;
-  };
+  request:
+    | (Omit<MaintenanceTypes.MRequest, "id"> & {
+        no: string;
+        sectionId: string;
+      })
+    | undefined;
   open: boolean;
   handleClose: () => void;
   requests: Array<MaintenanceTypes.MRequest>;
@@ -27,9 +29,11 @@ type NewMode = {
 
 type ReviewMode = {
   mode: "review";
-  request: MaintenanceTypes.MRequest & {
-    no: string;
-  };
+  request:
+    | (Omit<MaintenanceTypes.MRequest, "id"> & {
+        no: string;
+      })
+    | undefined;
   open: boolean;
   handleClose: () => void;
   requests: Array<MaintenanceTypes.MRequest>;
@@ -37,9 +41,11 @@ type ReviewMode = {
 
 type CompleteMode = {
   mode: "complete";
-  request: MaintenanceTypes.MRequest & {
-    no: string;
-  };
+  request:
+    | (Omit<MaintenanceTypes.MRequest, "id"> & {
+        no: string;
+      })
+    | undefined;
   open: boolean;
   handleClose: () => void;
   requests: Array<MaintenanceTypes.MRequest>;
@@ -59,7 +65,7 @@ function ModalMainRequest({
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: mode == "new" ? 800 : 400,
+    width: mode === "new" ? 800 : 400,
     bgcolor: "background.paper",
     border: "2px solid #000",
     boxShadow: 24,
@@ -71,14 +77,19 @@ function ModalMainRequest({
   };
 
   const AddRequest = () => {
-    const confirmation = confirm("Are you sure?");
+    if (!request) {
+      alert("No Request found");
+      return;
+    }
+
+    const confirmation = window.confirm("Are you sure?");
     if (!confirmation) {
       handleClose();
       return;
     }
 
     const req: MaintenanceTypes.IncomingMRequest = {
-      ...(request as NewMode["request"]),
+      sectionId: (request as NewMode["request"])!.sectionId,
       issue,
     };
 
@@ -118,23 +129,23 @@ function ModalMainRequest({
               })}
             </List>
           </Grid>
-          <Grid item xs={mode == "new" ? 6 : 12}>
+          <Grid item xs={mode === "new" ? 6 : 12}>
             <Typography
               id="modal-modal-title"
               variant="h6"
               component="h2"
               gutterBottom
             >
-              {mode == "new" ? "New Maintenance" : "Maintenance Details"}
+              {mode === "new" ? "New Maintenance" : "Maintenance Details"}
             </Typography>
-            {mode != "new" && (
+            {mode !== "new" && (
               <TextField
                 fullWidth
                 disabled
                 sx={{ my: 2 }}
                 id="no-disabled"
                 label="No"
-                defaultValue={request.no}
+                defaultValue={request && request.no}
               />
             )}
             <TextField
@@ -143,9 +154,9 @@ function ModalMainRequest({
               sx={{ my: 2 }}
               id="section-disabled"
               label="Section"
-              defaultValue={request.section}
+              defaultValue={request && request.section}
             />
-            {mode == "new" ? (
+            {mode === "new" ? (
               <TextField
                 fullWidth
                 sx={{ my: 2 }}
@@ -161,11 +172,11 @@ function ModalMainRequest({
                 sx={{ my: 2 }}
                 id="issue-disabled"
                 label="Issue"
-                defaultValue={request.issue}
+                defaultValue={request && request.issue}
               />
             )}
 
-            {request.remark && (
+            {request && request.remark && (
               <TextField
                 fullWidth
                 disabled
@@ -175,7 +186,7 @@ function ModalMainRequest({
                 defaultValue={request.remark}
               />
             )}
-            {mode == "new" && (
+            {mode === "new" && (
               <Box>
                 <Button variant="contained" onClick={AddRequest}>
                   Submit

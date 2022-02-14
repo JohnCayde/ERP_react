@@ -35,7 +35,7 @@ function Maintenance() {
 
   //data process
   const toolRequests = purchasing.requests.filter(
-    (request) => request.from == "Maintenance"
+    (request) => request.from === "Maintenance"
   );
 
   //state
